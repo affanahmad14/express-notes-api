@@ -21,13 +21,33 @@ app.get('/notes', (request, response) => {
     response.json(notes);
 });
 
-app.post('/note', (request, response) => {
+app.get('/notes.id', (request, response) => {
+    response.json(notes/notes.id);
+});
+
+app.post('/notes', (request, response) => {
+    const Note = {
+        //id: notes.length +1,
+        //note: request.body.note,
+        //autor: request.body.autor,
+        //date: request.body.date
+    };
+    notes.push(Note);
+    response.json(notes);
+});
+
+app.put('/notes/:id', (request, response) => {
     const newNote = {
         id: notes.length +1,
         note: request.body.note,
         autor: request.body.autor,
         date: request.body.date
     };
-    notes.push(newNote);
+    notes.put(notes/id);
+    response.json(notes);
+});
+
+app.delete('/notes/:id', (request, response) => {
+    notes = notes.filter(note => note.id !== parseInt(request.params.id));
     response.json(notes);
 });
