@@ -79,8 +79,6 @@ app.delete('/notes/:id', (request, response) => {
     response.send("Note has been deleted");
 });
 
-// Server starten
-app.listen(port, () => {
-    console.log(`server running on http://localhost:${port}`);
-  });
+
+
 
