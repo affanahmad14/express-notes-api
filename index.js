@@ -17,37 +17,70 @@ app.get('/', (request, response) => {
     response.send('Hello World');
 });
 
+//Alle Notizen abrufen
 app.get('/notes', (request, response) => {
     response.json(notes);
 });
 
-app.get('/notes.id', (request, response) => {
-    response.json(notes/notes.id);
+//Notiz nach ID abrufen
+app.get('/notes/:id', (request, response) => {
+
+    const id = parseInt(request.params.id);
+    let findNote = null;
+    notes.forEach(note => {
+        if (note.id === id) {
+            findNote = note;
+        }
+    });
+
+    response.json(findNote);
 });
 
+//Notiz erstellen
 app.post('/notes', (request, response) => {
-    const Note = {
-        //id: notes.length +1,
-        //note: request.body.note,
-        //autor: request.body.autor,
-        //date: request.body.date
-    };
-    notes.push(Note);
-    response.json(notes);
-});
 
-app.put('/notes/:id', (request, response) => {
+    const lastId = notes[notes.length - 1].id;
+    console.log(lastId);
     const newNote = {
-        id: notes.length +1,
+        id: lastId + 1,
         note: request.body.note,
         autor: request.body.autor,
-        date: request.body.date
+        date: new Date(),
     };
-    notes.put(notes/id);
-    response.json(notes);
+    notes.push(newNote);
+    response.send("Note has been stored");
+
 });
 
-app.delete('/notes/:id', (request, response) => {
-    notes = notes.filter(note => note.id !== parseInt(request.params.id));
-    response.json(notes);
+//Notiz updaten
+app.put('/notes/:id', (request, response) => {
+    letid = parseInt(request.params.id);
+    let updateNote = null;
+    notes.forEach(note => {
+        if (note.id === id) {
+            updateNote = note;
+        }
+    });
+
+    if (updateNote !== null) {
+        updateNote.note = request.body.note;
+        updateNote.autor = request.body.autor;
+        updateNote.date = new Date();
+    }
+    response.send("Note has been updated");
+
 });
+
+//Notiz löschen
+app.delete('/notes/:id', (request, response) => {
+    let id = parseInt(request.params.id);
+    notes = notes.filter(note => note.id !== id);
+    console.log(notes);
+    response.send("Note has been deleted");
+});
+
+// Server starten
+app.listen(port, () => {
+    console.log(`server running on http://localhost:${port}`);
+  });
+
